@@ -46,7 +46,7 @@ class RealSystemFacade implements SystemFacade {
             return null;
         }
 
-        final NetworkInfo activeInfo = connectivity.getActiveNetworkInfoForUid(uid);
+        final NetworkInfo activeInfo = connectivity.getActiveNetworkInfo(); // FIXME transfermanager : used to be getActiveNetworkInfoForUid(uid);
         if (activeInfo == null && Constants.LOGVV) {
             Log.v(Constants.TAG, "network is not available");
         }
@@ -55,8 +55,9 @@ class RealSystemFacade implements SystemFacade {
 
     @Override
     public boolean isActiveNetworkMetered() {
-        final ConnectivityManager conn = ConnectivityManager.from(mContext);
-        return conn.isActiveNetworkMetered();
+    	return false; // FIXME transfermanager
+//        final ConnectivityManager conn = ConnectivityManager.from(mContext);
+//        return conn.isActiveNetworkMetered();
     }
 
     @Override
@@ -70,11 +71,18 @@ class RealSystemFacade implements SystemFacade {
 
         NetworkInfo info = connectivity.getActiveNetworkInfo();
         boolean isMobile = (info != null && info.getType() == ConnectivityManager.TYPE_MOBILE);
-        boolean isRoaming = isMobile && TelephonyManager.getDefault().isNetworkRoaming();
+        boolean isRoaming = isMobile && _isNetworkRoaming();
+//        boolean isRoaming = isMobile && TelephonyManager.getDefault().isNetworkRoaming();
         if (Constants.LOGVV && isRoaming) {
             Log.v(Constants.TAG, "network is roaming");
         }
         return isRoaming;
+    }
+    
+    // FIXME is this the equivelent to getDefault?
+    private boolean _isNetworkRoaming() {
+    	TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+    	return telephonyManager.isNetworkRoaming();
     }
 
     @Override

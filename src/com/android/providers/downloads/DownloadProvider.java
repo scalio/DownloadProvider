@@ -37,7 +37,7 @@ import android.os.Binder;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.os.Process;
-import android.os.SELinux;
+//import android.os.SELinux;
 import android.provider.BaseColumns;
 import android.provider.Downloads;
 import android.provider.OpenableColumns;
@@ -46,7 +46,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.android.internal.util.IndentingPrintWriter;
-import com.google.android.collect.Maps;
+import com.google.common.collect.Maps;
 import com.google.common.annotations.VisibleForTesting;
 
 import java.io.File;
@@ -452,11 +452,11 @@ public final class DownloadProvider extends ContentProvider {
         Context context = getContext();
         context.startService(new Intent(context, DownloadService.class));
         mDownloadsDataDir = StorageManager.getDownloadDataDirectory(getContext());
-        try {
-            SELinux.restorecon(mDownloadsDataDir.getCanonicalPath());
-        } catch (IOException e) {
-            Log.wtf(Constants.TAG, "Could not get canonical path for download directory", e);
-        }
+//        try {
+//            SELinux.restorecon(mDownloadsDataDir.getCanonicalPath());
+//        } catch (IOException e) {
+//            Log.wtf(Constants.TAG, "Could not get canonical path for download directory", e);
+//        }
         return true;
     }
 
@@ -551,11 +551,11 @@ public final class DownloadProvider extends ContentProvider {
                         Binder.getCallingPid(), Binder.getCallingUid(),
                         "need WRITE_EXTERNAL_STORAGE permission to use DESTINATION_FILE_URI");
                 checkFileUriDestination(values);
-            } else if (dest == Downloads.Impl.DESTINATION_SYSTEMCACHE_PARTITION) {
-                getContext().enforcePermission(
-                        android.Manifest.permission.ACCESS_CACHE_FILESYSTEM,
-                        Binder.getCallingPid(), Binder.getCallingUid(),
-                        "need ACCESS_CACHE_FILESYSTEM permission to use system cache");
+//            } else if (dest == Downloads.Impl.DESTINATION_SYSTEMCACHE_PARTITION) {
+//                getContext().enforcePermission(
+//                        android.Manifest.permission.ACCESS_CACHE_FILESYSTEM,
+//                        Binder.getCallingPid(), Binder.getCallingUid(),
+//                        "need ACCESS_CACHE_FILESYSTEM permission to use system cache");
             }
             filteredValues.put(Downloads.Impl.COLUMN_DESTINATION, dest);
         }
@@ -1209,40 +1209,41 @@ public final class DownloadProvider extends ContentProvider {
         return ret;
     }
 
-    @Override
-    public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
-        final IndentingPrintWriter pw = new IndentingPrintWriter(writer, "  ", 120);
-
-        pw.println("Downloads updated in last hour:");
-        pw.increaseIndent();
-
-        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
-        final long modifiedAfter = mSystemFacade.currentTimeMillis() - DateUtils.HOUR_IN_MILLIS;
-        final Cursor cursor = db.query(DB_TABLE, null,
-                Downloads.Impl.COLUMN_LAST_MODIFICATION + ">" + modifiedAfter, null, null, null,
-                Downloads.Impl._ID + " ASC");
-        try {
-            final String[] cols = cursor.getColumnNames();
-            final int idCol = cursor.getColumnIndex(BaseColumns._ID);
-            while (cursor.moveToNext()) {
-                pw.println("Download #" + cursor.getInt(idCol) + ":");
-                pw.increaseIndent();
-                for (int i = 0; i < cols.length; i++) {
-                    // Omit sensitive data when dumping
-                    if (Downloads.Impl.COLUMN_COOKIE_DATA.equals(cols[i])) {
-                        continue;
-                    }
-                    pw.printPair(cols[i], cursor.getString(i));
-                }
-                pw.println();
-                pw.decreaseIndent();
-            }
-        } finally {
-            cursor.close();
-        }
-
-        pw.decreaseIndent();
-    }
+    // TODO
+//    @Override
+//    public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
+//        final IndentingPrintWriter pw = new IndentingPrintWriter(writer, "  ", 120);
+//
+//        pw.println("Downloads updated in last hour:");
+//        pw.increaseIndent();
+//
+//        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+//        final long modifiedAfter = mSystemFacade.currentTimeMillis() - DateUtils.HOUR_IN_MILLIS;
+//        final Cursor cursor = db.query(DB_TABLE, null,
+//                Downloads.Impl.COLUMN_LAST_MODIFICATION + ">" + modifiedAfter, null, null, null,
+//                Downloads.Impl._ID + " ASC");
+//        try {
+//            final String[] cols = cursor.getColumnNames();
+//            final int idCol = cursor.getColumnIndex(BaseColumns._ID);
+//            while (cursor.moveToNext()) {
+//                pw.println("Download #" + cursor.getInt(idCol) + ":");
+//                pw.increaseIndent();
+//                for (int i = 0; i < cols.length; i++) {
+//                    // Omit sensitive data when dumping
+//                    if (Downloads.Impl.COLUMN_COOKIE_DATA.equals(cols[i])) {
+//                        continue;
+//                    }
+//                    pw.printPair(cols[i], cursor.getString(i));
+//                }
+//                pw.println();
+//                pw.decreaseIndent();
+//            }
+//        } finally {
+//            cursor.close();
+//        }
+//
+//        pw.decreaseIndent();
+//    }
 
     private void logVerboseOpenFileInfo(Uri uri, String mode) {
         Log.v(Constants.TAG, "openFile uri: " + uri + ", mode: " + mode

@@ -31,16 +31,16 @@ import android.provider.Downloads;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.internal.R;
+//import com.android.internal.R;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import libcore.io.ErrnoException;
-import libcore.io.Libcore;
-import libcore.io.StructStat;
+//import libcore.io.ErrnoException;
+//import libcore.io.Libcore;
+//import libcore.io.StructStat;
 
 /**
  * Manages the storage space consumed by Downloads Data dir. When space falls below
@@ -49,16 +49,19 @@ import libcore.io.StructStat;
  */
 class StorageManager {
     /** the max amount of space allowed to be taken up by the downloads data dir */
-    private static final long sMaxdownloadDataDirSize =
-            Resources.getSystem().getInteger(R.integer.config_downloadDataDirSize) * 1024 * 1024;
+
+	private static final long sMaxdownloadDataDirSize = 100 * 1024 * 1024;
+//    private static final long sMaxdownloadDataDirSize =
+//            Resources.getSystem().getInteger(R.integer.config_downloadDataDirSize) * 1024 * 1024;
 
     /** threshold (in bytes) beyond which the low space warning kicks in and attempt is made to
      * purge some downloaded files to make space
      */
-    private static final long sDownloadDataDirLowSpaceThreshold =
-            Resources.getSystem().getInteger(
-                    R.integer.config_downloadDataDirLowSpaceThreshold)
-                    * sMaxdownloadDataDirSize / 100;
+    private static final long sDownloadDataDirLowSpaceThreshold = 10 * sMaxdownloadDataDirSize / 100;
+//  private static final long sDownloadDataDirLowSpaceThreshold =
+//  Resources.getSystem().getInteger(
+//          R.integer.config_downloadDataDirLowSpaceThreshold)
+//          * sMaxdownloadDataDirSize / 100;
 
     /** see {@link Environment#getExternalStorageDirectory()} */
     private final File mExternalStorageDir;
@@ -396,22 +399,23 @@ class StorageManager {
             }
         }
 
-        // delete files owned by us, but that don't appear in our database
-        final int myUid = android.os.Process.myUid();
-        for (File file : files) {
-            final String path = file.getAbsolutePath();
-            try {
-                final StructStat stat = Libcore.os.stat(path);
-                if (stat.st_uid == myUid) {
-                    if (Constants.LOGVV) {
-                        Log.d(TAG, "deleting spurious file " + path);
-                    }
-                    file.delete();
-                }
-            } catch (ErrnoException e) {
-                Log.w(TAG, "stat(" + path + ") result: " + e);
-            }
-        }
+        // TODO secure share / TransferManager
+//        // delete files owned by us, but that don't appear in our database
+//        final int myUid = android.os.Process.myUid();
+//        for (File file : files) {
+//            final String path = file.getAbsolutePath();
+//            try {
+//                final StructStat stat = Libcore.os.stat(path);
+//                if (stat.st_uid == myUid) {
+//                    if (Constants.LOGVV) {
+//                        Log.d(TAG, "deleting spurious file " + path);
+//                    }
+//                    file.delete();
+//                }
+//            } catch (ErrnoException e) {
+//                Log.w(TAG, "stat(" + path + ") result: " + e);
+//            }
+//        }
     }
 
     /**

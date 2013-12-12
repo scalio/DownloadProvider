@@ -33,10 +33,11 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.SystemClock;
 import android.provider.Downloads;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
-import android.util.LongSparseLongArray;
+//import android.util.LongSparseLongArray;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Maps;
@@ -76,14 +77,14 @@ public class DownloadNotifier {
      * to speed in bytes per second.
      */
     @GuardedBy("mDownloadSpeed")
-    private final LongSparseLongArray mDownloadSpeed = new LongSparseLongArray();
+    private final HashMap<Long, Long> mDownloadSpeed = new HashMap<Long, Long>();
 
     /**
      * Last time speed was reproted, mapped from {@link DownloadInfo#mId} to
      * {@link SystemClock#elapsedRealtime()}.
      */
     @GuardedBy("mDownloadSpeed")
-    private final LongSparseLongArray mDownloadTouch = new LongSparseLongArray();
+    private final HashMap<Long, Long> mDownloadTouch = new HashMap<Long, Long>();
 
     public DownloadNotifier(Context context) {
         mContext = context;
@@ -105,8 +106,8 @@ public class DownloadNotifier {
                 mDownloadSpeed.put(id, bytesPerSecond);
                 mDownloadTouch.put(id, SystemClock.elapsedRealtime());
             } else {
-                mDownloadSpeed.delete(id);
-                mDownloadTouch.delete(id);
+                mDownloadSpeed.remove(id);
+                mDownloadTouch.remove(id);
             }
         }
     }
@@ -138,7 +139,7 @@ public class DownloadNotifier {
             final int type = getNotificationTagType(tag);
             final Collection<DownloadInfo> cluster = clustered.get(tag);
 
-            final Notification.Builder builder = new Notification.Builder(mContext);
+            final NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext);
 
             // Use time when cluster was first shown to avoid shuffling
             final long firstShown;
@@ -223,7 +224,8 @@ public class DownloadNotifier {
                     if (speed > 0) {
                         final long remainingMillis = ((total - current) * 1000) / speed;
                         remainingText = res.getString(R.string.download_remaining,
-                                DateUtils.formatDuration(remainingMillis));
+//                                DateUtils.formatDuration(remainingMillis)); // FIXME 
+                        		"" + remainingMillis);
                     }
 
                     builder.setProgress(100, percent, false);
@@ -263,7 +265,7 @@ public class DownloadNotifier {
                 notif = builder.build();
 
             } else {
-                final Notification.InboxStyle inboxStyle = new Notification.InboxStyle(builder);
+                final NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle(builder);
 
                 for (DownloadInfo info : cluster) {
                     inboxStyle.addLine(getDownloadTitle(res, info));
@@ -322,9 +324,9 @@ public class DownloadNotifier {
     public void dumpSpeeds() {
         synchronized (mDownloadSpeed) {
             for (int i = 0; i < mDownloadSpeed.size(); i++) {
-                final long id = mDownloadSpeed.keyAt(i);
+                final long id = mDownloadSpeed.keySet().toArray(new Long[0])[i]; // FIXME TransferManager very inefficient
                 final long delta = SystemClock.elapsedRealtime() - mDownloadTouch.get(id);
-                Log.d(TAG, "Download " + id + " speed " + mDownloadSpeed.valueAt(i) + "bps, "
+                Log.d(TAG, "Download " + id + " speed " + mDownloadSpeed.get(i) + "bps, "
                         + delta + "ms ago");
             }
         }

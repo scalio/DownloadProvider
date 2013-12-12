@@ -33,7 +33,7 @@ import android.provider.Downloads.Impl;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import com.android.internal.annotations.GuardedBy;
+import javax.annotation.concurrent.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
 
 import java.util.ArrayList;

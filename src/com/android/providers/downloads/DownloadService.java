@@ -39,9 +39,9 @@ import android.provider.Downloads;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.internal.annotations.GuardedBy;
+import javax.annotation.concurrent.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
-import com.google.android.collect.Maps;
+import com.google.common.collect.Maps;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -98,8 +98,9 @@ public class DownloadService extends Service {
     private final ExecutorService mExecutor = buildDownloadExecutor();
 
     private static ExecutorService buildDownloadExecutor() {
-        final int maxConcurrent = Resources.getSystem().getInteger(
-                com.android.internal.R.integer.config_MaxConcurrentDownloadsAllowed);
+    	final int maxConcurrent = 5; // FIXME transfermanager
+//        final int maxConcurrent = Resources.getSystem().getInteger(
+//                com.android.internal.R.integer.config_MaxConcurrentDownloadsAllowed);
 
         // Create a bounded thread pool for executing downloads; it creates
         // threads as needed (up to maximum) and reclaims them when finished.

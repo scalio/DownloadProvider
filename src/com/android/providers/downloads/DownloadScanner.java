@@ -31,7 +31,7 @@ import android.os.SystemClock;
 import android.provider.Downloads;
 import android.util.Log;
 
-import com.android.internal.annotations.GuardedBy;
+import javax.annotation.concurrent.GuardedBy;
 import com.google.common.collect.Maps;
 
 import java.util.HashMap;

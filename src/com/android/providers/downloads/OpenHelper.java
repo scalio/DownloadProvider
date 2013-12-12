@@ -51,7 +51,7 @@ public class OpenHelper {
             final Uri localUri = getCursorUri(cursor, COLUMN_LOCAL_URI);
             final File file = getCursorFile(cursor, COLUMN_LOCAL_FILENAME);
             String mimeType = getCursorString(cursor, COLUMN_MEDIA_TYPE);
-            mimeType = DownloadDrmHelper.getOriginalMimeType(context, file, mimeType);
+//            mimeType = DownloadDrmHelper.getOriginalMimeType(context, file, mimeType);
 
             final Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -62,9 +62,9 @@ public class OpenHelper {
 
                 // Also splice in details about where it came from
                 final Uri remoteUri = getCursorUri(cursor, COLUMN_URI);
-                intent.putExtra(Intent.EXTRA_ORIGINATING_URI, remoteUri);
-                intent.putExtra(Intent.EXTRA_REFERRER, getRefererUri(context, id));
-                intent.putExtra(Intent.EXTRA_ORIGINATING_UID, getOriginatingUid(context, id));
+//                intent.putExtra(Intent.EXTRA_ORIGINATING_URI, remoteUri); // FIXME, what do these do for 
+//                intent.putExtra(Intent.EXTRA_REFERRER, getRefererUri(context, id));
+//                intent.putExtra(Intent.EXTRA_ORIGINATING_UID, getOriginatingUid(context, id));
             } else if ("file".equals(localUri.getScheme())) {
                 intent.setDataAndType(
                         ContentUris.withAppendedId(ALL_DOWNLOADS_CONTENT_URI, id), mimeType);
