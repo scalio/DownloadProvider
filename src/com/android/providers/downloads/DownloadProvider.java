@@ -16,8 +16,8 @@
 
 package com.android.providers.downloads;
 
-import android.app.DownloadManager;
-import android.app.DownloadManager.Request;
+import com.android.providers.downloads.DownloadManager;
+import com.android.providers.downloads.DownloadManager.Request;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;

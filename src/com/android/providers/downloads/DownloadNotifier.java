@@ -16,13 +16,13 @@
 
 package com.android.providers.downloads;
 
-import static android.app.DownloadManager.Request.VISIBILITY_VISIBLE;
-import static android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED;
-import static android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION;
+import static com.android.providers.downloads.DownloadManager.Request.VISIBILITY_VISIBLE;
+import static com.android.providers.downloads.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED;
+import static com.android.providers.downloads.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION;
 import static android.provider.Downloads.Impl.STATUS_RUNNING;
 import static com.android.providers.downloads.Constants.TAG;
 
-import android.app.DownloadManager;
+import com.android.providers.downloads.DownloadManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;

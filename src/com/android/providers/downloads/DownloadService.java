@@ -20,7 +20,7 @@ import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static com.android.providers.downloads.Constants.TAG;
 
 import android.app.AlarmManager;
-import android.app.DownloadManager;
+import com.android.providers.downloads.DownloadManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentResolver;

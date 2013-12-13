@@ -17,7 +17,7 @@
 
 package com.android.providers.downloads.ui;
 
-import android.app.DownloadManager;
+import com.android.providers.downloads.DownloadManager;
 import android.database.Cursor;
 import android.view.View;
 import android.view.ViewGroup;

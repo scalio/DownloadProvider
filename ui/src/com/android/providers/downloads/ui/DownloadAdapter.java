@@ -16,7 +16,7 @@
 
 package com.android.providers.downloads.ui;
 
-import android.app.DownloadManager;
+import com.android.providers.downloads.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -142,9 +142,11 @@ public class DownloadAdapter extends CursorAdapter {
     private String getSizeText() {
         long totalBytes = mCursor.getLong(mTotalBytesColumnId);
         String sizeText = "";
-        if (totalBytes >= 0) {
-            sizeText = Formatter.formatFileSize(mContext, totalBytes);
-        }
+        // FIXME transfermanager
+//        if (totalBytes >= 0) {
+//            sizeText = Formatter.formatFileSize(mContext, totalBytes);
+//        }
+        sizeText = totalBytes + " bytes";
         return sizeText;
     }
 
@@ -181,18 +183,20 @@ public class DownloadAdapter extends CursorAdapter {
             return;
         }
 
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromParts("file", "", null), mediaType);
-        PackageManager pm = mContext.getPackageManager();
-        List<ResolveInfo> list = pm.queryIntentActivities(intent,
-                PackageManager.MATCH_DEFAULT_ONLY);
-        if (list.size() == 0) {
-            // no icon found for this mediatype. use "unknown" icon
-            iconView.setImageResource(R.drawable.ic_download_misc_file_type);
-        } else {
-            Drawable icon = list.get(0).activityInfo.loadIcon(pm);
-            iconView.setImageDrawable(icon);
-        }
+        // FIXME transfermanager
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.setDataAndType(Uri.fromParts("file", "", null), mediaType);
+//        PackageManager pm = mContext.getPackageManager();
+//        List<ResolveInfo> list = pm.queryIntentActivities(intent,
+//                PackageManager.MATCH_DEFAULT_ONLY);
+//        if (list.size() == 0) {
+//            // no icon found for this mediatype. use "unknown" icon
+//            iconView.setImageResource(R.drawable.ic_download_misc_file_type);
+//        } else {
+//            Drawable icon = list.get(0).activityInfo.loadIcon(pm);
+//            iconView.setImageDrawable(icon);
+//        }
+        iconView.setImageResource(R.drawable.ic_download_misc_file_type);
         iconView.setVisibility(View.VISIBLE);
     }
 

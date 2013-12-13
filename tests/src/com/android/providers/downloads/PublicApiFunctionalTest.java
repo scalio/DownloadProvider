@@ -16,8 +16,8 @@
 
 package com.android.providers.downloads;
 
-import static android.app.DownloadManager.STATUS_FAILED;
-import static android.app.DownloadManager.STATUS_PAUSED;
+import static com.android.providers.downloads.DownloadManager.STATUS_FAILED;
+import static com.android.providers.downloads.DownloadManager.STATUS_PAUSED;
 import static android.net.TrafficStats.GB_IN_BYTES;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static java.net.HttpURLConnection.HTTP_MOVED_TEMP;
@@ -34,7 +34,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import android.app.DownloadManager;
+import com.android.providers.downloads.DownloadManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;

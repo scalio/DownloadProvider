@@ -16,13 +16,13 @@
 
 package com.android.providers.downloads;
 
-import static android.app.DownloadManager.COLUMN_LOCAL_FILENAME;
-import static android.app.DownloadManager.COLUMN_LOCAL_URI;
-import static android.app.DownloadManager.COLUMN_MEDIA_TYPE;
-import static android.app.DownloadManager.COLUMN_URI;
+import static com.android.providers.downloads.DownloadManager.COLUMN_LOCAL_FILENAME;
+import static com.android.providers.downloads.DownloadManager.COLUMN_LOCAL_URI;
+import static com.android.providers.downloads.DownloadManager.COLUMN_MEDIA_TYPE;
+import static com.android.providers.downloads.DownloadManager.COLUMN_URI;
 import static android.provider.Downloads.Impl.ALL_DOWNLOADS_CONTENT_URI;
 
-import android.app.DownloadManager;
+import com.android.providers.downloads.DownloadManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;

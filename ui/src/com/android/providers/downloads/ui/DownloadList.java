@@ -18,7 +18,7 @@ package com.android.providers.downloads.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DownloadManager;
+import com.android.providers.downloads.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.Context;

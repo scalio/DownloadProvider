@@ -16,7 +16,7 @@
 
 package com.android.providers.downloads;
 
-import android.app.DownloadManager;
+import com.android.providers.downloads.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;

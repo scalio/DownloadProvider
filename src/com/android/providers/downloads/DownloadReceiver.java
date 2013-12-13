@@ -16,10 +16,10 @@
 
 package com.android.providers.downloads;
 
-import static android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED;
-import static android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION;
+import static com.android.providers.downloads.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED;
+import static com.android.providers.downloads.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION;
 
-import android.app.DownloadManager;
+import com.android.providers.downloads.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;

@@ -83,11 +83,13 @@ public class DownloadItem extends GridLayout implements Checkable {
     }
 
     private boolean inCheckArea(MotionEvent event) {
-        if (isLayoutRtl()) {
-            return event.getX() > getWidth() - CHECKMARK_AREA;
-        } else {
-            return event.getX() < CHECKMARK_AREA;
-        }
+    	// FIXME transfermanager
+    	return event.getX() < CHECKMARK_AREA;
+//        if (isLayoutRtl()) {
+//            return event.getX() > getWidth() - CHECKMARK_AREA;
+//        } else {
+//            return event.getX() < CHECKMARK_AREA;
+//        }
     }
 
     @Override

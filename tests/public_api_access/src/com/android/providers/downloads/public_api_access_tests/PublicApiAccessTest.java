@@ -16,7 +16,7 @@
 
 package com.android.providers.downloads.public_api_access_tests;
 
-import android.app.DownloadManager;
+import com.android.providers.downloads.DownloadManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.net.Uri;
