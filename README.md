@@ -9,4 +9,6 @@ SecureShareLib was developed by [Scal.io](http://scal.io) and [Small World News]
 
 [StoryMaker - Make your story great](http://storymaker.cc/)
 
+### Authors
+
 - [Josh Steiner](https://github.com/vitriolix/)
